@@ -36,19 +36,21 @@ class AbsenceController extends Controller
             $findAbsence = Absence::where('employee_id', $userId)->whereDate('created_at', today())->first();
 
             if ($findAbsence != null) {
-                $timeNow = $findAbsence->check_out_time;
-                $message = " sudah melakukan absen pulang pukul ";
+                if ($findAbsence->check_out_time != null) {
+                    $timeNow = $findAbsence->check_out_time;
+                    $message = " sudah melakukan absen pulang pukul ";
 
-                return back()->with([
-                    'name' => $find->name,
-                    'success' => $message,
-                    'time' => $timeNow
-                ]);
+                    return back()->with([
+                        'name' => $find->name,
+                        'success' => $message,
+                        'time' => $timeNow
+                    ]);
+                }
             }
 
             $checkFaceRecog = $this->biznetFaceRecog->verifyFace($find->division->facegallery_id, $find->email, $find->name, $request->image);
 
-            if (!isset($checkFaceRecog['risetai']['verified'])) {
+            if (!isset ($checkFaceRecog['risetai']['verified'])) {
                 return back()->withErrors([
                     'error' => 'Terjadi kesalahan harap ulangi kembali',
                 ]);
