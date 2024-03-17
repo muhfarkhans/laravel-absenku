@@ -25,6 +25,20 @@
             transform: rotateY(180deg);
             -webkit-transform: rotateY(180deg);
         }
+
+        .content-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .content-container {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start
+            }
+        }
     </style>
 </head>
 
@@ -33,20 +47,15 @@
     <div id="auth">
 
         <div class="row h-100">
-            <div class="d-flex justify-content-center items-center align-items-center">
-                <div>
+            <div class="content-container">
+                <div class="p-2">
                     <div class="auth-logo mb-3">
                         <h1 class="m-0 fs-5">Absensi Karyawan</h1>
                     </div>
 
-
                     <h1 class="auth-title">Scan wajah anda.</h1>
                     <p class="auth-subtitle mb-5">pastikan wajah anda terlihat jelas dilayar, atau <a
                             href="{{ route('login') }}">lihat daftar masuk bulan anda bulan ini</a></p>
-
-                    {{-- @error('error')
-                        <div class="alert alert-danger alert-dismissible show">{{ $message }}</div>
-                    @enderror --}}
 
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible show">
@@ -71,7 +80,7 @@
                     <form action="{{ route('absence.create') }}" method="post" id="form">
                         @csrf
                         <div class="d-flex justify-content-center">
-                            <video id="videoEl" autoplay muted></video>
+                            <video id="videoEl" autoplay muted style="width: 100%;"></video>
                             <canvas id="canvas" style="display: none;"></canvas>
                             <input type="text" name="image" id="image" hidden>
                         </div>
